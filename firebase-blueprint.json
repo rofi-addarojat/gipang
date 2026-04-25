@@ -1,0 +1,60 @@
+{
+  "entities": {
+    "LandingPageSetting": {
+      "title": "Landing Page Setting",
+      "description": "Configuration for the landing page content.",
+      "type": "object",
+      "properties": {
+        "heroTitle": { "type": "string" },
+        "heroSubtitle": { "type": "string" },
+        "heroCtaText": { "type": "string" },
+        "aboutText": { "type": "string" },
+        "contactWa": { "type": "string" },
+        "contactShopee": { "type": "string" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["heroTitle"]
+    },
+    "Article": {
+      "title": "Article",
+      "description": "A blog post or news article.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "content": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "coverImage": { "type": "string" },
+        "authorId": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["title", "slug", "content", "authorId", "status", "createdAt", "updatedAt"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "Authorized admin users",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["email", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/LandingPageSetting" },
+      "description": "Stores general app settings, e.g. document id = 'landingPage'"
+    },
+    "/articles/{articleId}": {
+      "schema": { "$ref": "#/entities/Article" },
+      "description": "Articles for the blog"
+    },
+    "/admins/{uid}": {
+      "schema": { "$ref": "#/entities/Admin" },
+      "description": "List of user UIDs who are admins"
+    }
+  }
+}

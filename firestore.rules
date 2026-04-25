@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() { return request.auth != null; }
+    
+    // Bootstrapped Admin
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'masroficom@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin() && (settingId == null || isValidId(settingId));
+    }
+
+    match /articles/{articleId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin() && (articleId == null || isValidId(articleId));
+    }
+
+    match /admins/{uid} {
+      allow read, create, update, delete: if isAdmin() && (uid == null || isValidId(uid));
+    }
+  }
+}
