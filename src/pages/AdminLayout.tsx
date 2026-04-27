@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Outlet, Navigate, Link, useNavigate } from 'react-router-dom';
-import { auth, db, OperationType, handleFirestoreError } from '../lib/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from "react";
+import { Outlet, Navigate, Link, useNavigate } from "react-router-dom";
+import { auth, db, OperationType, handleFirestoreError } from "../lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function AdminLayout() {
   const [loading, setLoading] = useState(true);
@@ -14,14 +14,18 @@ export default function AdminLayout() {
     const unsub = onAuthStateChanged(auth, async (userDoc) => {
       setUser(userDoc);
       if (userDoc) {
-        if (userDoc.email === 'masroficom@gmail.com') {
+        if (userDoc.email === "masroficom@gmail.com") {
           setIsAdmin(true);
         } else {
           try {
-            const adminDoc = await getDoc(doc(db, 'admins', userDoc.uid));
+            const adminDoc = await getDoc(doc(db, "admins", userDoc.uid));
             setIsAdmin(adminDoc.exists());
           } catch (error) {
-            handleFirestoreError(error, OperationType.GET, 'admins/' + userDoc.uid);
+            handleFirestoreError(
+              error,
+              OperationType.GET,
+              "admins/" + userDoc.uid,
+            );
           }
         }
       } else {
@@ -39,11 +43,40 @@ export default function AdminLayout() {
     <div className="min-h-screen bg-gray-100 flex">
       {/* Sidebar */}
       <div className="w-64 bg-white border-r">
-        <div className="h-16 flex items-center px-6 border-b font-bold text-xl text-accent">CMS Admin</div>
+        <div className="h-16 flex items-center px-6 border-b font-bold text-xl text-accent">
+          CMS Admin
+        </div>
         <nav className="p-4 space-y-2">
-          <Link to="/admin" className="block px-4 py-2 hover:bg-gray-50 rounded">Dashboard / Landing Page</Link>
-          <Link to="/admin/articles" className="block px-4 py-2 hover:bg-gray-50 rounded">Articles</Link>
-          <button onClick={() => auth.signOut()} className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-50 rounded">Logout</button>
+          <Link
+            to="/admin"
+            className="block px-4 py-2 hover:bg-gray-50 rounded"
+          >
+            Dashboard / Landing Page
+          </Link>
+          <Link
+            to="/admin/orders"
+            className="block px-4 py-2 hover:bg-gray-50 rounded"
+          >
+            Pesanan
+          </Link>
+          <Link
+            to="/admin/articles"
+            className="block px-4 py-2 hover:bg-gray-50 rounded"
+          >
+            Articles
+          </Link>
+          <Link
+            to="/admin/settings"
+            className="block px-4 py-2 hover:bg-gray-50 rounded"
+          >
+            QRIS Setting
+          </Link>
+          <button
+            onClick={() => auth.signOut()}
+            className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-50 rounded"
+          >
+            Logout
+          </button>
         </nav>
       </div>
       {/* Main content */}

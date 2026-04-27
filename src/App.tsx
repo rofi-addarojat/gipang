@@ -1,25 +1,35 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ScriptInjector from "./components/ScriptInjector";
 
-import LandingPage from './pages/LandingPage';
-import AdminLogin from './pages/AdminLogin';
-import AdminLayout from './pages/AdminLayout';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminArticles from './pages/AdminArticles';
-import ArticleEditor from './pages/ArticleEditor';
-import ArticleView from './pages/ArticleView';
+import LandingPage from "./pages/LandingPage";
+import Checkout from "./pages/Checkout";
+import TrackOrder from "./pages/TrackOrder";
+import AdminLogin from "./pages/AdminLogin";
+import AdminLayout from "./pages/AdminLayout";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminArticles from "./pages/AdminArticles";
+import AdminOrders from "./pages/AdminOrders";
+import AdminSettings from "./pages/AdminSettings";
+import ArticleEditor from "./pages/ArticleEditor";
+import ArticleView from "./pages/ArticleView";
 
 export default function App() {
   return (
     <BrowserRouter>
+      <ScriptInjector />
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/lacak-pesanan" element={<TrackOrder />} />
         <Route path="/artikel/:slug" element={<ArticleView />} />
-        
+
         <Route path="/admin/login" element={<AdminLogin />} />
-        
+
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="settings" element={<AdminSettings />} />
           <Route path="articles" element={<AdminArticles />} />
           <Route path="articles/new" element={<ArticleEditor />} />
           <Route path="articles/edit/:id" element={<ArticleEditor />} />
