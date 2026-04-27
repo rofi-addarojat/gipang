@@ -131,6 +131,10 @@ export default function AdminOrders() {
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
                         <Clock size={12} /> Pending
                       </span>
+                    ) : order.status === "paid" ? (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800">
+                        <CheckCircle size={12} /> Terbayar
+                      </span>
                     ) : order.status === "processed" ? (
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
                         <RefreshCw size={12} /> Diproses
@@ -151,6 +155,7 @@ export default function AdminOrders() {
                         className="text-sm border border-gray-200 rounded px-2 py-1 outline-none focus:border-accent"
                       >
                         <option value="pending">Pending</option>
+                        <option value="paid">Terbayar</option>
                         <option value="processed">Diproses</option>
                         <option value="completed">Selesai</option>
                       </select>

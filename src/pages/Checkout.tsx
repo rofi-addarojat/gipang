@@ -30,6 +30,8 @@ export default function Checkout() {
   const basePrice = formData.quantity * PRICE_PER_ITEM;
   const totalPrice = formData.paymentMethod === "qris" ? basePrice + uniqueCode : basePrice;
 
+  const [orderStatus, setOrderStatus] = useState("pending");
+
   useEffect(() => {
     async function loadQrisSettings() {
       try {
@@ -55,12 +57,8 @@ export default function Checkout() {
   }, []);
 
   useEffect(() => {
-    if (formData.paymentMethod === "qris") {
+    if (formData.paymentMethod === "qris" && staticQrisContent) {
       try {
-        if (!staticQrisContent) {
-          // If not configured in admin dashboard yet, we don't show dynamic QRIS
-          return;
-        }
         const dynamicString = createDynamicQris(staticQrisContent, totalPrice);
         QRCode.toDataURL(dynamicString, { width: 300, margin: 2, scale: 5 }, (err, url) => {
           if (!err) setQrisUrl(url);
@@ -70,6 +68,25 @@ export default function Checkout() {
       }
     }
   }, [totalPrice, formData.paymentMethod, staticQrisContent]);
+
+  useEffect(() => {
+    let unsubscribe: any;
+    if (success && createdOrderId && formData.paymentMethod === "qris") {
+      import("firebase/firestore").then(({ doc, onSnapshot }) => {
+        unsubscribe = onSnapshot(doc(db, "orders", createdOrderId), (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.data();
+            if (data.status === "paid") {
+              setOrderStatus("paid");
+            }
+          }
+        });
+      });
+    }
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
+  }, [success, createdOrderId, formData.paymentMethod]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -162,6 +179,78 @@ export default function Checkout() {
   };
 
   if (success) {
+    if (formData.paymentMethod === "qris" && orderStatus !== "paid") {
+      return (
+        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-white p-8 rounded-3xl shadow-lg border border-black/5 text-center max-w-md w-full"
+          >
+            <div className="animate-pulse mb-6">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+                <svg className="w-8 h-8 text-orange-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              </div>
+            </div>
+            <h2 className="text-2xl font-bold mb-2">Menunggu Pembayaran</h2>
+            <p className="text-gray-600 mb-6 text-sm">
+              Silakan scan QRIS di bawah ini untuk menyelesaikan pembayaran. Sistem akan mendeteksi pembayaran Anda secara otomatis.
+            </p>
+
+            <div className="bg-orange-50 border border-orange-100 rounded-2xl p-6 mb-6 inline-block">
+              {qrisUrl ? (
+                <img
+                  src={qrisUrl || undefined}
+                  alt="QRIS Dinamis"
+                  className="w-48 h-48 object-contain mx-auto bg-white p-2 rounded-xl border border-gray-200"
+                />
+              ) : (
+                <div className="w-48 h-48 bg-gray-200 animate-pulse rounded-xl mx-auto"></div>
+              )}
+              <div className="mt-4 pt-4 border-t border-orange-200">
+                 <p className="text-sm font-medium text-orange-900 mb-1">Total Tagihan:</p>
+                 <p className="text-2xl font-black text-orange-600">Rp {totalPrice.toLocaleString("id-ID")}</p>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6">
+              <p className="text-sm text-gray-500 mb-1">Nomor Pesanan</p>
+              <div className="font-mono font-bold text-gray-900 border border-gray-200 py-1.5 px-3 rounded-lg bg-white inline-block">
+                {createdOrderId}
+              </div>
+            </div>
+
+            {/* Tombol simulasi untuk testing (bisa dihapus nanti, di MVP kita biarkan untuk demo) */}
+            {process.env.NODE_ENV !== 'production' && (
+              <button
+                onClick={async () => {
+                   // Simulate successful payment detection
+                   const { updateDoc, doc } = await import("firebase/firestore");
+                   await updateDoc(doc(db, "orders", createdOrderId), { status: "paid" });
+                }}
+                className="text-xs text-blue-500 underline mb-4"
+              >
+                Simulasikan Pembayaran Berhasil (Dev Only)
+              </button>
+            )}
+
+            <button
+              onClick={() => {
+                const text = `Halo Admin Gipang Cilegon,%0A%0ASaya sudah membuat pesanan dengan ID: ${createdOrderId}%0ANama: ${formData.name}%0ATotal: Rp ${totalPrice.toLocaleString("id-ID")}%0AMetode: QRIS.%0A%0ASaya mengalami kendala pembayaran. Mohon bantuannya.`;
+                window.open(`https://wa.me/${adminWhatsappContent}?text=${text}`, "_blank");
+              }}
+              className="text-gray-500 hover:text-gray-900 text-sm font-medium"
+            >
+              Mengalami kendala? Hubungi Admin
+            </button>
+          </motion.div>
+        </div>
+      );
+    }
+
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
         <motion.div
@@ -170,12 +259,12 @@ export default function Checkout() {
           className="bg-white p-8 rounded-2xl shadow-sm border border-black/5 text-center max-w-md w-full"
         >
           <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold mb-2">Pesanan Berhasil!</h2>
+          <h2 className="text-2xl font-bold mb-2">Pesanan & Pembayaran Berhasil!</h2>
           <p className="text-gray-600 mb-6">
             Terima kasih telah memesan Gipang Cilegon.{" "}
             {formData.paymentMethod === "cod"
               ? "Kami akan segera memproses pesanan Anda dan Anda dapat membayar di tempat."
-              : "Pesanan Anda sedang kami proses. Mohon selesaikan pembayaran QRIS jika belum."}
+              : "Pembayaran QRIS Anda telah berhasil dideteksi sistem! Pesanan sedang kami proses."}
           </p>
 
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6">
@@ -191,12 +280,12 @@ export default function Checkout() {
           <div className="flex flex-col gap-3">
             <button
               onClick={() => {
-                const text = `Halo Admin Gipang Cilegon,%0A%0AIni adalah konfirmasi pesanan saya:%0A- *ID Pesanan*: ${createdOrderId}%0A- *Nama*: ${formData.name}%0A- *Jumlah*: ${formData.quantity} Box%0A- *Total Harga*: Rp ${totalPrice.toLocaleString("id-ID")}%0A- *Metode*: ${formData.paymentMethod === "cod" ? "COD" : "QRIS"}%0A%0AMohon segera diproses. Terima kasih!`;
+                const text = `Halo Admin Gipang Cilegon,%0A%0AIni adalah konfirmasi pesanan saya:%0A- *ID Pesanan*: ${createdOrderId}%0A- *Nama*: ${formData.name}%0A- *Jumlah*: ${formData.quantity} Box%0A- *Total Harga*: Rp ${totalPrice.toLocaleString("id-ID")}%0A- *Metode*: ${formData.paymentMethod === "cod" ? "COD" : "QRIS (Sudah Terbayar)"}%0A%0AMohon segera diproses. Terima kasih!`;
                 window.open(`https://wa.me/${adminWhatsappContent}?text=${text}`, "_blank");
               }}
               className="w-full bg-[#25D366] text-white font-bold py-3 px-6 rounded-xl hover:bg-[#20bd5a] transition-colors flex items-center justify-center gap-2"
             >
-              Kirim via WhatsApp
+              Kirim Konfirmasi WhatsApp
             </button>
             <div className="flex gap-3">
               <button
