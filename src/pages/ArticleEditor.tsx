@@ -9,8 +9,8 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db, auth, OperationType, handleFirestoreError } from "../lib/firebase";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 export default function ArticleEditor() {
   const { id } = useParams();
@@ -91,6 +91,23 @@ export default function ArticleEditor() {
     setSaving(false);
   };
 
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image", "video"],
+      [{ color: [] }, { background: [] }],
+      [{ align: [] }],
+      ["clean"],
+    ],
+  };
+
   return (
     <div className="bg-white p-6 rounded-lg shadow max-w-4xl">
       <h2 className="text-2xl font-bold mb-6">
@@ -129,24 +146,104 @@ export default function ArticleEditor() {
         <div>
           <label className="block text-sm font-medium mb-1">Content</label>
           <div className="bg-white">
-            <ReactQuill
+              <ReactQuill
               theme="snow"
               value={data.content}
               onChange={(content) => setData((prev) => ({ ...prev, content }))}
-              className="h-64 mb-12"
+              modules={modules}
+              className="h-96 mb-12"
             />
           </div>
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1">
-            Cover Image URL
-          </label>
-          <input
-            className="w-full border p-2 rounded"
-            name="coverImage"
-            value={data.coverImage}
-            onChange={handleChange}
-          />
+          <label className="block text-sm font-medium mb-2">Cover Image</label>
+          <div className="flex gap-4 mb-2">
+            <label className="flex items-center gap-2">
+              <input 
+                type="radio" 
+                name="imageMode" 
+                value="url" 
+                checked={!data.coverImage.startsWith('data:image')} 
+                onChange={() => {
+                  setData(prev => ({ ...prev, coverImage: '' }));
+                }}
+              />
+              URL
+            </label>
+            <label className="flex items-center gap-2">
+              <input 
+                type="radio" 
+                name="imageMode" 
+                value="upload" 
+                checked={data.coverImage.startsWith('data:image')} 
+                onChange={() => {
+                   setData(prev => ({ ...prev, coverImage: 'data:image/jpeg;base64,' })); // placeholder to switch mode
+                }}
+              />
+              Upload File
+            </label>
+          </div>
+
+          {!data.coverImage.startsWith('data:image') ? (
+            <input
+              className="w-full border p-2 rounded"
+              name="coverImage"
+              value={data.coverImage}
+              onChange={handleChange}
+              placeholder="https://..."
+            />
+          ) : (
+            <input
+              type="file"
+              accept="image/*"
+              className="w-full border p-2 rounded"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.readAsDataURL(file);
+                  reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target?.result as string;
+                    img.onload = () => {
+                      const canvas = document.createElement("canvas");
+                      const MAX_WIDTH = 800;
+                      let width = img.width;
+                      let height = img.height;
+                      
+                      if (width > MAX_WIDTH) {
+                        height = Math.round((height *= MAX_WIDTH / width));
+                        width = MAX_WIDTH;
+                      }
+              
+                      canvas.width = width;
+                      canvas.height = height;
+                      const ctx = canvas.getContext("2d");
+                      ctx?.drawImage(img, 0, 0, width, height);
+                      setData(prev => ({ ...prev, coverImage: canvas.toDataURL("image/jpeg", 0.7) }));
+                    };
+                  };
+                }
+              }}
+            />
+          )}
+
+          {data.coverImage && data.coverImage !== 'data:image/jpeg;base64,' && (
+            <div className="mt-2 text-sm text-gray-500">
+              <p className="mb-2">Image Preview:</p>
+              <img
+                src={data.coverImage}
+                alt="Cover Preview"
+                className="w-full max-w-sm rounded-lg object-cover shadow-sm border border-gray-200"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+                onLoad={(e) => {
+                  (e.target as HTMLImageElement).style.display = "block";
+                }}
+              />
+            </div>
+          )}
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Status</label>

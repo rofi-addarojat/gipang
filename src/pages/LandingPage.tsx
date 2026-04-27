@@ -13,6 +13,9 @@ import {
   ShieldCheck,
   Heart,
   MessageCircle,
+  Instagram,
+  Facebook,
+  Youtube
 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
@@ -141,6 +144,12 @@ export default function LandingPage() {
     footerTitle: "Gipang Cilegon",
     footerSlogan: '"Cemilane Wong Cilegon"',
     footerCopyright: "© 2026 Gipang Cilegon. All rights reserved.",
+
+    // Social
+    socialInstagram: "",
+    socialTiktok: "",
+    socialFacebook: "",
+    socialYoutube: "",
   });
 
   const [articles, setArticles] = useState<any[]>([]);
@@ -806,6 +815,43 @@ export default function LandingPage() {
           <p className="text-text-main/70 italic mb-8 font-medium">
             {cmsData.footerSlogan}
           </p>
+
+          {/* Social Media Links */}
+          <div className="flex gap-4 mb-8 justify-center">
+            {cmsData.socialInstagram && (
+              <a href={cmsData.socialInstagram} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-accent transition-colors" aria-label="Instagram">
+                <Instagram size={24} />
+              </a>
+            )}
+            {cmsData.socialFacebook && (
+              <a href={cmsData.socialFacebook} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-accent transition-colors" aria-label="Facebook">
+                <Facebook size={24} />
+              </a>
+            )}
+            {cmsData.socialYoutube && (
+              <a href={cmsData.socialYoutube} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-accent transition-colors" aria-label="Youtube">
+                <Youtube size={24} />
+              </a>
+            )}
+            {cmsData.socialTiktok && (
+              <a href={cmsData.socialTiktok} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-accent transition-colors" aria-label="TikTok">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                </svg>
+              </a>
+            )}
+          </div>
+
           <div className="w-12 h-1 bg-accent/30 rounded-full mb-8"></div>
           <p className="text-sm text-text-main/50 font-medium tracking-wide">
             {cmsData.footerCopyright}

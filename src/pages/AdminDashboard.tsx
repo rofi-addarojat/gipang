@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db, OperationType, handleFirestoreError } from "../lib/firebase";
+import ImageInput from "../components/ImageInput";
 
 export default function AdminDashboard() {
   const [data, setData] = useState({
@@ -74,6 +75,12 @@ export default function AdminDashboard() {
     footerSlogan: '"Cemilane Wong Cilegon"',
     footerCopyright: "© 2026 Gipang Cilegon. All rights reserved.",
 
+    // Social Media Links
+    socialInstagram: "",
+    socialTiktok: "",
+    socialFacebook: "",
+    socialYoutube: "",
+
     // Custom Scripts
     customHeadScripts: "",
     customBodyScripts: "",
@@ -86,9 +93,9 @@ export default function AdminDashboard() {
     if (!value) return true; // Let other validation handle required fields if needed
     try {
       const url = new URL(value);
-      return url.protocol === "http:" || url.protocol === "https:";
+      return url.protocol === "http:" || url.protocol === "https:" || value.startsWith('data:image');
     } catch {
-      return false;
+      return value.startsWith('data:image');
     }
   };
 
@@ -111,7 +118,7 @@ export default function AdminDashboard() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setData({ ...data, [name]: value });
+    setData(prev => ({ ...prev, [name]: value }));
 
     const urlFields = [
       "logoImage",
@@ -122,6 +129,10 @@ export default function AdminDashboard() {
       "k3Image",
       "temanNgopiImg1",
       "temanNgopiImg2",
+      "socialInstagram",
+      "socialTiktok",
+      "socialFacebook",
+      "socialYoutube",
     ];
 
     if (urlFields.includes(name)) {
@@ -187,18 +198,13 @@ export default function AdminDashboard() {
             1. Branding & Kontak
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-semibold mb-1">
-                Logo Image URL
-              </label>
-              <input
-                className={`w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none ${urlErrors.logoImage ? "border-red-500" : ""}`}
-                name="logoImage"
-                value={data.logoImage}
-                onChange={handleChange}
-              />
-              {urlErrors.logoImage && <p className="text-red-500 text-xs mt-1">{urlErrors.logoImage}</p>}
-            </div>
+            <ImageInput
+              label="Logo Image (URL atau Upload)"
+              name="logoImage"
+              value={data.logoImage}
+              onChange={handleChange}
+              error={urlErrors.logoImage}
+            />
             <div>
               <label className="block text-sm font-semibold mb-1">
                 Logo Text Main
@@ -301,18 +307,13 @@ export default function AdminDashboard() {
                 onChange={handleChange}
               />
             </div>
-            <div>
-              <label className="block text-sm font-semibold mb-1">
-                Hero Image URL
-              </label>
-              <input
-                className={`w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none ${urlErrors.heroImageBig ? "border-red-500" : ""}`}
-                name="heroImageBig"
-                value={data.heroImageBig}
-                onChange={handleChange}
-              />
-              {urlErrors.heroImageBig && <p className="text-red-500 text-xs mt-1">{urlErrors.heroImageBig}</p>}
-            </div>
+            <ImageInput
+              label="Hero Image Big (URL atau Upload)"
+              name="heroImageBig"
+              value={data.heroImageBig}
+              onChange={handleChange}
+              error={urlErrors.heroImageBig}
+            />
           </div>
         </section>
 
@@ -333,18 +334,13 @@ export default function AdminDashboard() {
                 onChange={handleChange}
               />
             </div>
-            <div>
-              <label className="block text-sm font-semibold mb-1">
-                Image URL
-              </label>
-              <input
-                className={`w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none ${urlErrors.keunggulanImage ? "border-red-500" : ""}`}
-                name="keunggulanImage"
-                value={data.keunggulanImage}
-                onChange={handleChange}
-              />
-              {urlErrors.keunggulanImage && <p className="text-red-500 text-xs mt-1">{urlErrors.keunggulanImage}</p>}
-            </div>
+            <ImageInput
+              label="Image Utama Keunggulan"
+              name="keunggulanImage"
+              value={data.keunggulanImage}
+              onChange={handleChange}
+              error={urlErrors.keunggulanImage}
+            />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
               <div>
                 <label className="block text-sm font-semibold mb-1">
@@ -413,16 +409,13 @@ export default function AdminDashboard() {
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-semibold mb-1">
-                  Keunggulan 3 - Image URL
-                </label>
-                <input
-                  className={`w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none ${urlErrors.k3Image ? "border-red-500" : ""}`}
+                <ImageInput
+                  label="Keunggulan 3 - Image"
                   name="k3Image"
                   value={data.k3Image}
                   onChange={handleChange}
+                  error={urlErrors.k3Image}
                 />
-                {urlErrors.k3Image && <p className="text-red-500 text-xs mt-1">{urlErrors.k3Image}</p>}
               </div>
             </div>
           </div>
@@ -446,30 +439,20 @@ export default function AdminDashboard() {
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold mb-1">
-                  Image 1 URL
-                </label>
-                <input
-                  className={`w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none ${urlErrors.temanNgopiImg1 ? "border-red-500" : ""}`}
-                  name="temanNgopiImg1"
-                  value={data.temanNgopiImg1}
-                  onChange={handleChange}
-                />
-                {urlErrors.temanNgopiImg1 && <p className="text-red-500 text-xs mt-1">{urlErrors.temanNgopiImg1}</p>}
-              </div>
-              <div>
-                <label className="block text-sm font-semibold mb-1">
-                  Image 2 URL
-                </label>
-                <input
-                  className={`w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none ${urlErrors.temanNgopiImg2 ? "border-red-500" : ""}`}
-                  name="temanNgopiImg2"
-                  value={data.temanNgopiImg2}
-                  onChange={handleChange}
-                />
-                {urlErrors.temanNgopiImg2 && <p className="text-red-500 text-xs mt-1">{urlErrors.temanNgopiImg2}</p>}
-              </div>
+              <ImageInput
+                label="Image 1"
+                name="temanNgopiImg1"
+                value={data.temanNgopiImg1}
+                onChange={handleChange}
+                error={urlErrors.temanNgopiImg1}
+              />
+              <ImageInput
+                label="Image 2"
+                name="temanNgopiImg2"
+                value={data.temanNgopiImg2}
+                onChange={handleChange}
+                error={urlErrors.temanNgopiImg2}
+              />
             </div>
           </div>
         </section>
@@ -757,10 +740,69 @@ export default function AdminDashboard() {
           </div>
         </section>
 
+        {/* Social Media Links */}
+        <section className="p-4 border rounded-xl bg-gray-50/50">
+          <h3 className="text-xl font-bold mb-4 text-accent">9. Social Media Links</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold mb-1">
+                Instagram URL
+              </label>
+              <input
+                className={`w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none ${urlErrors.socialInstagram ? "border-red-500" : ""}`}
+                name="socialInstagram"
+                value={data.socialInstagram}
+                onChange={handleChange}
+                placeholder="https://instagram.com/..."
+              />
+              {urlErrors.socialInstagram && <p className="text-red-500 text-xs mt-1">{urlErrors.socialInstagram}</p>}
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-1">
+                TikTok URL
+              </label>
+              <input
+                className={`w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none ${urlErrors.socialTiktok ? "border-red-500" : ""}`}
+                name="socialTiktok"
+                value={data.socialTiktok}
+                onChange={handleChange}
+                placeholder="https://tiktok.com/..."
+              />
+              {urlErrors.socialTiktok && <p className="text-red-500 text-xs mt-1">{urlErrors.socialTiktok}</p>}
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-1">
+                Facebook URL
+              </label>
+              <input
+                className={`w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none ${urlErrors.socialFacebook ? "border-red-500" : ""}`}
+                name="socialFacebook"
+                value={data.socialFacebook}
+                onChange={handleChange}
+                placeholder="https://facebook.com/..."
+              />
+              {urlErrors.socialFacebook && <p className="text-red-500 text-xs mt-1">{urlErrors.socialFacebook}</p>}
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-1">
+                YouTube URL
+              </label>
+              <input
+                className={`w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none ${urlErrors.socialYoutube ? "border-red-500" : ""}`}
+                name="socialYoutube"
+                value={data.socialYoutube}
+                onChange={handleChange}
+                placeholder="https://youtube.com/..."
+              />
+              {urlErrors.socialYoutube && <p className="text-red-500 text-xs mt-1">{urlErrors.socialYoutube}</p>}
+            </div>
+          </div>
+        </section>
+
         {/* Custom Scripts */}
         <section className="p-4 border rounded-xl bg-gray-50/50">
           <h3 className="text-xl font-bold mb-4 text-accent">
-            9. Custom Scripts (Analytics, Meta, dll)
+            10. Custom Scripts (Analytics, Meta, dll)
           </h3>
           <p className="text-sm text-gray-600 mb-4">
             Tambahkan kode script pihak ketiga (Google Analytics, Search
