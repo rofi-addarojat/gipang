@@ -441,7 +441,7 @@ export default function Checkout() {
                       >
                         {qrisUrl ? (
                           <img
-                            src={qrisUrl}
+                            src={qrisUrl || undefined}
                             alt="QRIS Dinamis"
                             className="w-full h-full object-contain p-2"
                           />

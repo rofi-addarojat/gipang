@@ -232,7 +232,7 @@ export default function ArticleEditor() {
             <div className="mt-2 text-sm text-gray-500">
               <p className="mb-2">Image Preview:</p>
               <img
-                src={data.coverImage}
+                src={data.coverImage || undefined}
                 alt="Cover Preview"
                 className="w-full max-w-sm rounded-lg object-cover shadow-sm border border-gray-200"
                 onError={(e) => {

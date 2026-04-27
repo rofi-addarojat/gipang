@@ -239,7 +239,7 @@ export default function LandingPage() {
               >
                 <img
                   className="h-10 md:h-11 w-auto object-contain transition-all duration-500 group-hover:scale-105"
-                  src={cmsData.logoImage}
+                  src={cmsData.logoImage || undefined}
                   alt="Logo Gipang Cilegon"
                   width="120"
                   height="40"
@@ -381,7 +381,7 @@ export default function LandingPage() {
               <FadeIn direction="left" className="order-1 md:order-2 relative">
                 <div className="absolute inset-0 bg-accent/20 rounded-full blur-3xl transform scale-90 -z-10"></div>
                 <img
-                  src={cmsData.heroImageBig}
+                  src={cmsData.heroImageBig || undefined}
                   alt="Gipang Cilegon Cemilan Renyah Bikin Kangen"
                   fetchPriority="high"
                   width="600"
@@ -409,7 +409,7 @@ export default function LandingPage() {
                 <div className="relative">
                   <div className="absolute inset-0 bg-accent/10 rounded-[2.5rem] transform -translate-x-4 translate-y-4 -z-10"></div>
                   <img
-                    src={cmsData.keunggulanImage}
+                    src={cmsData.keunggulanImage || undefined}
                     alt="Proses Pembuatan Gipang Cilegon Super Renyah"
                     loading="lazy"
                     width="600"
@@ -474,7 +474,7 @@ export default function LandingPage() {
                       <div className="flex items-center justify-start gap-4">
                         <div className="relative group cursor-pointer inline-block">
                           <img
-                            src={cmsData.k3Image}
+                            src={cmsData.k3Image || undefined}
                             alt="Ilustrasi Kemasan Toples Aman Gipang Cilegon"
                             loading="lazy"
                             width="96"
@@ -504,7 +504,7 @@ export default function LandingPage() {
               <FadeIn direction="right">
                 <div className="group overflow-hidden rounded-[2rem] shadow-lg border border-white/50 bg-white">
                   <img
-                    src={cmsData.temanNgopiImg1}
+                    src={cmsData.temanNgopiImg1 || undefined}
                     alt="Menikmati Gipang Cilegon saat santai bebas cemas"
                     loading="lazy"
                     width="600"
@@ -516,7 +516,7 @@ export default function LandingPage() {
               <FadeIn direction="left" delay={0.2}>
                 <div className="group overflow-hidden rounded-[2rem] shadow-lg border border-white/50 bg-white">
                   <img
-                    src={cmsData.temanNgopiImg2}
+                    src={cmsData.temanNgopiImg2 || undefined}
                     alt="Gipang Cilegon sebagai pendamping kopi di sore hari"
                     loading="lazy"
                     width="600"
@@ -701,7 +701,7 @@ export default function LandingPage() {
                       <div className="overflow-hidden">
                         {article.coverImage ? (
                           <img
-                            src={article.coverImage}
+                            src={article.coverImage || undefined}
                             alt={article.title}
                             loading="lazy"
                             className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
@@ -802,7 +802,7 @@ export default function LandingPage() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
           <img
-            src={cmsData.logoImage}
+            src={cmsData.logoImage || undefined}
             alt="Logo Bawah Gipang Cilegon"
             loading="lazy"
             width="140"

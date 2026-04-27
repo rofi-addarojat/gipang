@@ -95,7 +95,7 @@ export default function ImageInput({ label, name, value, onChange, error, placeh
       {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
       {value && value !== 'data:image/jpeg;base64,' && (
         <img 
-          src={value} 
+          src={value || undefined} 
           alt="Preview" 
           className="mt-2 h-20 w-20 object-cover rounded border bg-gray-50"
           onError={(e) => (e.currentTarget.style.display = 'none')}

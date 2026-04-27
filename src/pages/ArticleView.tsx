@@ -52,7 +52,7 @@ export default function ArticleView() {
       <article className="max-w-3xl mx-auto px-4 sm:px-6 mt-12 bg-white p-8 rounded-2xl shadow-sm border border-black/5">
         {article.coverImage && (
           <img
-            src={article.coverImage}
+            src={article.coverImage || undefined}
             alt={article.title}
             loading="lazy"
             className="w-full h-auto aspect-video object-cover rounded-xl mb-8"

@@ -14,6 +14,7 @@ import { RefreshCw, CheckCircle, Clock, Trash2 } from "lucide-react";
 export default function AdminOrders() {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
@@ -28,7 +29,11 @@ export default function AdminOrders() {
         setLoading(false);
       },
       (err) => {
-        handleFirestoreError(err, OperationType.LIST, "orders");
+        try {
+          handleFirestoreError(err, OperationType.LIST, "orders");
+        } catch (e: any) {
+          setErrorMsg(e.message);
+        }
         setLoading(false);
       },
     );
@@ -64,6 +69,7 @@ export default function AdminOrders() {
   };
 
   if (loading) return <div className="p-6">Loading orders...</div>;
+  if (errorMsg) return <div className="p-6 text-red-500">Error loading orders: {errorMsg}</div>;
 
   return (
     <div className="bg-white p-6 rounded-lg shadow min-h-screen">
