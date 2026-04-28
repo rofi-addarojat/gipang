@@ -8,6 +8,33 @@ export default function ScriptInjector() {
   useEffect(() => {
     if (injected.current) return;
 
+    const injectNodes = async (nodes: Node[], target: HTMLElement) => {
+      for (const node of nodes) {
+        if (node.nodeName.toLowerCase() === "script") {
+          await new Promise<void>((resolve) => {
+            const scriptNode = document.createElement("script");
+            const originalScript = node as HTMLScriptElement;
+            
+            Array.from(originalScript.attributes).forEach((attr) => {
+              scriptNode.setAttribute(attr.name, attr.value);
+            });
+            scriptNode.textContent = originalScript.textContent;
+
+            if (originalScript.src) {
+              scriptNode.onload = () => resolve();
+              scriptNode.onerror = () => resolve(); // continue even if it fails
+              target.appendChild(scriptNode);
+            } else {
+              target.appendChild(scriptNode);
+              resolve();
+            }
+          });
+        } else {
+          target.appendChild(node.cloneNode(true));
+        }
+      }
+    };
+
     const fetchAndInject = async () => {
       try {
         const snap = await getDoc(doc(db, "settings", "landingPage"));
@@ -24,45 +51,16 @@ export default function ScriptInjector() {
             link.href = faviconImage;
           }
 
-          if (customHeadScripts && customHeadScripts.trim() !== "") {
-            const headContainer = document.createElement("div");
-            headContainer.innerHTML = customHeadScripts;
+          const parser = new DOMParser();
 
-            // Recreate script tags to ensure they execute
-            Array.from(headContainer.childNodes).forEach((node) => {
-              if (node.nodeName.toLowerCase() === "script") {
-                const scriptNode = document.createElement("script");
-                Array.from((node as HTMLScriptElement).attributes).forEach(
-                  (attr) => {
-                    scriptNode.setAttribute(attr.name, attr.value);
-                  },
-                );
-                scriptNode.textContent = node.textContent;
-                document.head.appendChild(scriptNode);
-              } else {
-                document.head.appendChild(node.cloneNode(true));
-              }
-            });
+          if (customHeadScripts && customHeadScripts.trim() !== "") {
+            const parsedDoc = parser.parseFromString(customHeadScripts, "text/html");
+            await injectNodes(Array.from(parsedDoc.head.childNodes), document.head);
           }
 
           if (customBodyScripts && customBodyScripts.trim() !== "") {
-            const bodyContainer = document.createElement("div");
-            bodyContainer.innerHTML = customBodyScripts;
-
-            Array.from(bodyContainer.childNodes).forEach((node) => {
-              if (node.nodeName.toLowerCase() === "script") {
-                const scriptNode = document.createElement("script");
-                Array.from((node as HTMLScriptElement).attributes).forEach(
-                  (attr) => {
-                    scriptNode.setAttribute(attr.name, attr.value);
-                  },
-                );
-                scriptNode.textContent = node.textContent;
-                document.body.appendChild(scriptNode);
-              } else {
-                document.body.appendChild(node.cloneNode(true));
-              }
-            });
+            const parsedDoc = parser.parseFromString(customBodyScripts, "text/html");
+            await injectNodes(Array.from(parsedDoc.body.childNodes), document.body);
           }
         }
       } catch (err) {

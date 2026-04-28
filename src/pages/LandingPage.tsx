@@ -383,23 +383,23 @@ export default function LandingPage() {
       </header>
 
       <main>
-        {/* 2. HERO SECTION */}
+              {/* 2. HERO SECTION */}
         <section
           id="beranda"
           className="pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden relative"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-16 items-center">
               {/* Left Content */}
               <FadeIn
                 direction="right"
-                className="order-2 lg:order-1 flex flex-col items-center lg:items-start text-center lg:text-left"
+                className="order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left"
               >
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 border border-accent/20 text-sm font-semibold text-accent mb-6 shadow-sm">
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 border border-accent/20 text-sm font-semibold text-accent mb-4 md:mb-6 shadow-sm">
                   {cmsData.heroBadge}
                 </span>
                 <h1
-                  className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-text-main mb-6"
+                  className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-text-main mb-4 md:mb-6"
                   dangerouslySetInnerHTML={{
                     __html: cmsData.heroTitle.replace(
                       "Manis Legitnya",
@@ -407,7 +407,7 @@ export default function LandingPage() {
                     ),
                   }}
                 ></h1>
-                <p className="text-lg text-text-main/80 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                <p className="text-base sm:text-lg text-text-main/80 mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
                   {cmsData.heroSubtitle}
                 </p>
 
@@ -416,13 +416,13 @@ export default function LandingPage() {
                   whileTap={{ scale: 0.95 }}
                   href="#pesan"
                   onClick={(e: any) => handleNavClick(e, "#pesan")}
-                  className="inline-block bg-accent text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl shadow-accent/30 hover:shadow-accent/40 transition-shadow mb-8"
+                  className="inline-block bg-accent text-white px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-base md:text-lg shadow-xl shadow-accent/30 hover:shadow-accent/40 transition-shadow mb-6 md:mb-8"
                   aria-label="Gulir ke bagian Pesan Sekarang"
                 >
                   {cmsData.heroCtaText}
                 </motion.a>
 
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-sm font-medium text-text-main/70">
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-4 text-xs md:text-sm font-medium text-text-main/70">
                   <div className="flex items-center gap-1.5 bg-white/40 px-3 py-1.5 rounded-md">
                     <span>🌟</span> 100% Alami
                   </div>
@@ -436,7 +436,7 @@ export default function LandingPage() {
               </FadeIn>
 
               {/* Right Content */}
-              <FadeIn direction="left" className="order-1 lg:order-2 relative w-full max-w-lg mx-auto lg:max-w-none">
+              <FadeIn direction="left" className="order-1 md:order-2 relative w-full max-w-sm sm:max-w-md md:max-w-none mx-auto mb-8 md:mb-0">
                 <div className="absolute inset-0 bg-accent/20 rounded-full blur-3xl transform scale-90 -z-10"></div>
                 <img
                   src={cmsData.heroImageBig || undefined}
@@ -444,7 +444,7 @@ export default function LandingPage() {
                   fetchPriority="high"
                   width="600"
                   height="600"
-                  className="w-full aspect-[4/3] sm:aspect-square lg:aspect-[4/5] xl:aspect-square object-cover rounded-[2rem] shadow-2xl border-4 border-white transform hover:rotate-1 transition-transform duration-500"
+                  className="w-full aspect-[4/3] sm:aspect-square md:aspect-auto md:h-[400px] lg:h-[500px] object-cover rounded-[2rem] shadow-2xl border-4 border-white transform hover:rotate-1 transition-transform duration-500"
                 />
               </FadeIn>
             </div>
