@@ -12,7 +12,7 @@ export default function ScriptInjector() {
       try {
         const snap = await getDoc(doc(db, "settings", "landingPage"));
         if (snap.exists() && snap.data()) {
-          const { customHeadScripts, customBodyScripts, faviconImage, googleAnalyticsId, googleSearchConsole } = snap.data();
+          const { customHeadScripts, customBodyScripts, faviconImage } = snap.data();
 
           if (faviconImage && faviconImage.trim() !== "") {
             let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
@@ -22,37 +22,6 @@ export default function ScriptInjector() {
               document.head.appendChild(link);
             }
             link.href = faviconImage;
-          }
-
-          if (googleSearchConsole && googleSearchConsole.trim() !== "") {
-            let meta = document.querySelector("meta[name='google-site-verification']") as HTMLMetaElement;
-            if (!meta) {
-              meta = document.createElement('meta');
-              meta.name = 'google-site-verification';
-              document.head.appendChild(meta);
-            }
-            meta.content = googleSearchConsole;
-          }
-
-          if (googleAnalyticsId && googleAnalyticsId.trim() !== "") {
-            const existingScript = document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${googleAnalyticsId}"]`);
-            if (!existingScript) {
-              // Add GA script
-              const gaScript = document.createElement("script");
-              gaScript.async = true;
-              gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`;
-              document.head.appendChild(gaScript);
-
-              // Add GA config
-              const configScript = document.createElement("script");
-              configScript.innerHTML = `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${googleAnalyticsId}');
-              `;
-              document.head.appendChild(configScript);
-            }
           }
 
           if (customHeadScripts && customHeadScripts.trim() !== "") {

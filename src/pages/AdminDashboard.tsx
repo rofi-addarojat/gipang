@@ -82,10 +82,6 @@ export default function AdminDashboard() {
     socialFacebook: "",
     socialYoutube: "",
 
-    // SEO & Analytics
-    googleAnalyticsId: "",
-    googleSearchConsole: "",
-
     // Custom Scripts
     customHeadScripts: "",
     customBodyScripts: "",
@@ -812,46 +808,10 @@ export default function AdminDashboard() {
           </div>
         </section>
 
-        {/* SEO & Analytics */}
-        <section className="p-4 border rounded-xl bg-gray-50/50">
-          <h3 className="text-xl font-bold mb-4 text-accent">
-            10. SEO & Analytics
-          </h3>
-          <p className="text-sm text-gray-600 mb-4">
-            Masukkan ID untuk inject otomatis Google Analytics & Google Search Console. 
-          </p>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold mb-1">
-                Google Analytics Measurement ID (Contoh: G-XXXXXXXXXX)
-              </label>
-              <input
-                className="w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none"
-                name="googleAnalyticsId"
-                value={data.googleAnalyticsId}
-                onChange={handleChange}
-                placeholder="G-..."
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-1">
-                Google Search Console Verification ID
-              </label>
-              <input
-                className="w-full border p-2 rounded focus:ring-2 focus:ring-accent outline-none"
-                name="googleSearchConsole"
-                value={data.googleSearchConsole}
-                onChange={handleChange}
-                placeholder="content dari tag meta google-site-verification"
-              />
-            </div>
-          </div>
-        </section>
-
         {/* Custom Scripts */}
         <section className="p-4 border rounded-xl bg-gray-50/50">
           <h3 className="text-xl font-bold mb-4 text-accent">
-            11. Custom Scripts (Lainnya)
+            10. Custom Scripts (Analytics, Meta, dll)
           </h3>
           <p className="text-sm text-gray-600 mb-4">
             Tambahkan kode script pihak ketiga (Google Analytics, Search
