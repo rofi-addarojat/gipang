@@ -389,17 +389,17 @@ export default function LandingPage() {
           className="pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden relative"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Left Content */}
               <FadeIn
                 direction="right"
-                className="order-2 md:order-1 flex flex-col items-start text-left"
+                className="order-2 lg:order-1 flex flex-col items-center lg:items-start text-center lg:text-left"
               >
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 border border-accent/20 text-sm font-semibold text-accent mb-6 shadow-sm">
                   {cmsData.heroBadge}
                 </span>
                 <h1
-                  className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-text-main mb-6"
+                  className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-text-main mb-6"
                   dangerouslySetInnerHTML={{
                     __html: cmsData.heroTitle.replace(
                       "Manis Legitnya",
@@ -407,7 +407,7 @@ export default function LandingPage() {
                     ),
                   }}
                 ></h1>
-                <p className="text-lg text-text-main/80 mb-8 max-w-lg leading-relaxed">
+                <p className="text-lg text-text-main/80 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
                   {cmsData.heroSubtitle}
                 </p>
 
@@ -422,7 +422,7 @@ export default function LandingPage() {
                   {cmsData.heroCtaText}
                 </motion.a>
 
-                <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-text-main/70">
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-sm font-medium text-text-main/70">
                   <div className="flex items-center gap-1.5 bg-white/40 px-3 py-1.5 rounded-md">
                     <span>🌟</span> 100% Alami
                   </div>
@@ -436,7 +436,7 @@ export default function LandingPage() {
               </FadeIn>
 
               {/* Right Content */}
-              <FadeIn direction="left" className="order-1 md:order-2 relative">
+              <FadeIn direction="left" className="order-1 lg:order-2 relative w-full max-w-lg mx-auto lg:max-w-none">
                 <div className="absolute inset-0 bg-accent/20 rounded-full blur-3xl transform scale-90 -z-10"></div>
                 <img
                   src={cmsData.heroImageBig || undefined}
@@ -444,7 +444,7 @@ export default function LandingPage() {
                   fetchPriority="high"
                   width="600"
                   height="600"
-                  className="w-full aspect-[4/3] sm:aspect-square md:aspect-[4/5] lg:aspect-square object-cover rounded-[2rem] shadow-2xl border-4 border-white transform hover:rotate-1 transition-transform duration-500"
+                  className="w-full aspect-[4/3] sm:aspect-square lg:aspect-[4/5] xl:aspect-square object-cover rounded-[2rem] shadow-2xl border-4 border-white transform hover:rotate-1 transition-transform duration-500"
                 />
               </FadeIn>
             </div>

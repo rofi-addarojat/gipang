@@ -5,6 +5,7 @@ import ImageInput from "../components/ImageInput";
 
 export default function AdminDashboard() {
   const [data, setData] = useState({
+    faviconImage: "",
     logoImage: "https://i.ibb.co.com/4RpzdRff/image.png",
     logoTextMain: "Gipang Cilegon",
     logoTextSub: "Go Internasional 🌍",
@@ -121,6 +122,7 @@ export default function AdminDashboard() {
     setData(prev => ({ ...prev, [name]: value }));
 
     const urlFields = [
+      "faviconImage",
       "logoImage",
       "contactShopee",
       "contactTokopedia",
@@ -198,6 +200,13 @@ export default function AdminDashboard() {
             1. Branding & Kontak
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <ImageInput
+              label="Favicon Image (URL atau Upload)"
+              name="faviconImage"
+              value={data.faviconImage}
+              onChange={handleChange}
+              error={urlErrors.faviconImage}
+            />
             <ImageInput
               label="Logo Image (URL atau Upload)"
               name="logoImage"

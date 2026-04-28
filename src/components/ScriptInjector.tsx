@@ -12,7 +12,17 @@ export default function ScriptInjector() {
       try {
         const snap = await getDoc(doc(db, "settings", "landingPage"));
         if (snap.exists() && snap.data()) {
-          const { customHeadScripts, customBodyScripts } = snap.data();
+          const { customHeadScripts, customBodyScripts, faviconImage } = snap.data();
+
+          if (faviconImage && faviconImage.trim() !== "") {
+            let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+            if (!link) {
+              link = document.createElement('link');
+              link.rel = 'icon';
+              document.head.appendChild(link);
+            }
+            link.href = faviconImage;
+          }
 
           if (customHeadScripts && customHeadScripts.trim() !== "") {
             const headContainer = document.createElement("div");
