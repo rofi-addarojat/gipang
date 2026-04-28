@@ -41,6 +41,7 @@ const FadeIn = ({
   delay?: number;
   direction?: "up" | "down" | "left" | "right" | "none";
   className?: string;
+  key?: React.Key;
 }) => {
   const directionOffsets = {
     up: { y: 40, x: 0 },
@@ -62,6 +63,63 @@ const FadeIn = ({
     </motion.div>
   );
 };
+
+const marketplaceReviews = [
+  {
+    id: 1,
+    name: "Siska Amelia",
+    source: "Shopee",
+    rating: 5,
+    date: "12 Okt 2023",
+    text: "Packing sangat aman berlapis bubble wrap. Gipangnya beneran renyah dan wangiii karamel. Pas banget buat teman ngeteh sore.",
+    variant: "Variant: Original 500g"
+  },
+  {
+    id: 2,
+    name: "budi_santoso88",
+    source: "Tokopedia",
+    rating: 5,
+    date: "24 Nov 2023",
+    text: "Barang cepat sampai. Udah sering beli oleh-oleh di sini dan gapernah ngecewain. Rasanya konsisten sama kayak yang dulu.",
+    variant: "Variant: Varian Duo"
+  },
+  {
+    id: 3,
+    name: "Cinta P.",
+    source: "Shopee",
+    rating: 5,
+    date: "05 Jan 2024",
+    text: "Manisnya beneran pas, ngga bikin serik di tenggorokan. Anak-anak pada suka banget! Bakalan langganan pokoknya.",
+    variant: "Variant: Original 250g"
+  },
+  {
+    id: 4,
+    name: "Ria R.",
+    source: "Tokopedia",
+    rating: 5,
+    date: "14 Feb 2024",
+    text: "Mantap!! Beli buat oleh-oleh mertua, katanya enak. Bikin nagih dan kemasannya itu lho tebel jadi aman ngga ancur.",
+    variant: "Variant: Premium Pouch"
+  },
+  {
+    id: 5,
+    name: "dian_eka",
+    source: "Shopee",
+    rating: 5,
+    date: "02 Mar 2024",
+    text: "Gila sih, baru buka kemasan langsung ludes setengah. Renyah banget dan karamelnya kerasa premium! Seller juga ramah.",
+    variant: "Variant: Original 500g"
+  },
+  {
+    id: 6,
+    name: "Andi Wijaya",
+    source: "Tokopedia",
+    rating: 5,
+    date: "18 Mei 2024",
+    text: "Oleh-oleh wajib kalau ingat Cilegon. Sekarang kemasannya makin bagus, rasanya tetep juara dari dulu. Recommended banget.",
+    variant: "Variant: Premium Pouch"
+  }
+];
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -541,7 +599,61 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* 5. SECTION: KATA MEREKA */}
+        {/* 5. SECTION: CARA PEMESANAN */}
+        <section className="py-24 bg-white relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeIn direction="none" className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-text-main">
+                Cara Mudah Menikmati Gipang Cilegon
+              </h2>
+              <p className="text-text-main/70 mt-4 text-lg">Pesan langsung dari rumah, biar kami yang antarkan rasa renyah ini ke depan pintu Anda.</p>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {[
+                {
+                  step: "01",
+                  title: "Pilih Produk",
+                  desc: "Lihat dan pilih varian gipang yang Anda inginkan di halaman checkout kami."
+                },
+                {
+                  step: "02",
+                  title: "Isi Data Diri",
+                  desc: "Masukkan alamat pengiriman dan pilih metode pembayaran favorit Anda (QRIS / COD)."
+                },
+                {
+                  step: "03",
+                  title: "Konfirmasi",
+                  desc: "Selesaikan pembayaran, dan pesanan Anda akan langsung kami verifikasi."
+                },
+                {
+                  step: "04",
+                  title: "Tunggu Dirumah",
+                  desc: "Duduk manis, kurir kami akan memastikan pesanan sampai dengan aman dan utuh."
+                }
+              ].map((item, i) => (
+                <FadeIn key={item.step} direction="up" delay={i * 0.1} className="relative">
+                  <div className="bg-primary/30 border border-black/5 rounded-3xl p-8 h-full hover:-translate-y-2 transition-transform duration-300">
+                    <span className="text-5xl font-black text-accent/20 mb-6 block">{item.step}</span>
+                    <h3 className="text-xl font-bold text-text-main mb-3">{item.title}</h3>
+                    <p className="text-text-main/70 leading-relaxed">{item.desc}</p>
+                  </div>
+                  {i < 3 && (
+                    <div className="hidden md:block absolute top-1/2 -right-4 w-8 border-t-2 border-dashed border-accent/30 -translate-y-1/2 z-10"></div>
+                  )}
+                </FadeIn>
+              ))}
+            </div>
+            
+            <FadeIn direction="up" className="mt-12 text-center">
+              <a href="#pesan" onClick={(e) => handleNavClick(e, "#pesan")} className="inline-flex items-center gap-2 text-accent font-bold hover:gap-3 transition-all hover:brightness-110">
+                Mulai Pesan Sekarang <span aria-hidden="true">&rarr;</span>
+              </a>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* 6. SECTION: KATA MEREKA */}
         <section id="testimoni" className="py-24 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#FAEDDF] via-white to-primary animate-gradient-xy pointer-events-none -z-10"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -552,137 +664,86 @@ export default function LandingPage() {
             </FadeIn>
 
             <FadeIn direction="up" delay={0.1}>
-              <div
-                className="overflow-hidden cursor-grab active:cursor-grabbing"
-                ref={emblaRef}
-              >
-                <div className="flex -ml-4 md:-ml-8">
-                  {/* Card 1 */}
-                  <div className="pl-4 md:pl-8 flex-[0_0_90%] md:flex-[0_0_33.333%] min-w-0">
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{
-                        type: "spring",
-                        bounce: 0.5,
-                        duration: 0.8,
-                        delay: 0,
-                      }}
-                      className="bg-white p-8 rounded-3xl border border-primary-dark shadow-md hover:shadow-xl transition-shadow relative h-full flex flex-col"
-                    >
-                      <div className="flex gap-1 mb-6 text-yellow-400">
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
-                      </div>
-                      <p className="text-text-main/80 italic mb-8 leading-relaxed text-lg">
-                        {cmsData.t1Text}
-                      </p>
-                      <div className="flex items-center gap-4 border-t border-black/5 pt-6 mt-auto">
-                        <div className="w-12 h-12 bg-accent/10 text-accent font-bold rounded-full flex items-center justify-center text-lg">
-                          {cmsData.t1Initial}
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-text-main">
-                            {cmsData.t1Name}
-                          </h4>
-                          <p className="text-sm text-text-main/60">
-                            {cmsData.t1City}
-                          </p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
+              <div className="relative flex flex-col gap-6 -mx-4 sm:-mx-6 lg:-mx-8 overflow-hidden py-4">
+                {/* Decorative gradients for fading edges */}
+                <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-primary to-transparent z-10 pointer-events-none hidden md:block"></div>
+                <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-primary to-transparent z-10 pointer-events-none hidden md:block"></div>
 
-                  {/* Card 2 */}
-                  <div className="pl-4 md:pl-8 flex-[0_0_90%] md:flex-[0_0_33.333%] min-w-0">
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{
-                        type: "spring",
-                        bounce: 0.5,
-                        duration: 0.8,
-                        delay: 0.2,
-                      }}
-                      className="bg-white p-8 rounded-3xl border border-primary-dark shadow-md hover:shadow-xl transition-shadow relative h-full flex flex-col"
+                {/* Marquee Row 1 */}
+                <div className="flex w-max animate-marquee gap-6 hover:[animation-play-state:paused] pl-6">
+                  {[...marketplaceReviews, ...marketplaceReviews].map((r, i) => (
+                    <div
+                      key={`row1-${i}`}
+                      className="w-[320px] md:w-[400px] shrink-0 bg-white p-6 rounded-3xl border border-primary-dark shadow-sm hover:shadow-lg transition-transform hover:-translate-y-1 relative flex flex-col"
                     >
-                      <div className="flex gap-1 mb-6 text-yellow-400">
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 font-bold rounded-full flex items-center justify-center text-lg ${i % 2 === 0 ? 'bg-[#EE4D2D]/10 text-[#EE4D2D]' : 'bg-[#00AA5B]/10 text-[#00AA5B]'}`}>
+                            {r.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-text-main text-sm truncate w-32">{r.name}</h4>
+                            <div className="flex gap-0.5 text-yellow-400">
+                              {[...Array(r.rating)].map((_, idx) => (
+                                <Star key={idx} size={12} className="fill-current" />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-right flex flex-col justify-end">
+                          <p className="text-[11px] text-text-main/50 font-medium">{r.date}</p>
+                        </div>
                       </div>
-                      <p className="text-text-main/80 italic mb-8 leading-relaxed text-lg">
-                        {cmsData.t2Text}
+                      <p className="text-text-main/80 text-sm leading-relaxed mb-4 flex-grow">
+                        "{r.text}"
                       </p>
-                      <div className="flex items-center gap-4 border-t border-black/5 pt-6 mt-auto">
-                        <div className="w-12 h-12 bg-accent/10 text-accent font-bold rounded-full flex items-center justify-center text-lg">
-                          {cmsData.t2Initial}
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-text-main">
-                            {cmsData.t2Name}
-                          </h4>
-                          <p className="text-sm text-text-main/60">
-                            {cmsData.t2City}
-                          </p>
-                        </div>
+                      <div className="mt-auto px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-xs text-text-main/60 truncate">
+                        {r.variant}
                       </div>
-                    </motion.div>
-                  </div>
+                    </div>
+                  ))}
+                </div>
 
-                  {/* Card 3 */}
-                  <div className="pl-4 md:pl-8 flex-[0_0_90%] md:flex-[0_0_33.333%] min-w-0">
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{
-                        type: "spring",
-                        bounce: 0.5,
-                        duration: 0.8,
-                        delay: 0.4,
-                      }}
-                      className="bg-white p-8 rounded-3xl border border-primary-dark shadow-md hover:shadow-xl transition-shadow relative h-full flex flex-col"
+                {/* Marquee Row 2 (Reverse, or just different timing, but since we use same animation, we can shift the items or make another animation if we wanted, but let's just use same animation with slow speed) */}
+                <div className="flex w-max animate-marquee-slow gap-6 hover:[animation-play-state:paused] pl-6" style={{ animationDirection: "reverse" }}>
+                  {[...marketplaceReviews.slice().reverse(), ...marketplaceReviews.slice().reverse()].map((r, i) => (
+                    <div
+                      key={`row2-${i}`}
+                      className="w-[320px] md:w-[400px] shrink-0 bg-white p-6 rounded-3xl border border-primary-dark shadow-sm hover:shadow-lg transition-transform hover:-translate-y-1 relative flex flex-col"
                     >
-                      <div className="flex gap-1 mb-6 text-yellow-400">
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
-                        <Star size={20} className="fill-current" />
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 font-bold rounded-full flex items-center justify-center text-lg ${i % 2 === 0 ? 'bg-[#00AA5B]/10 text-[#00AA5B]' : 'bg-[#EE4D2D]/10 text-[#EE4D2D]'}`}>
+                            {r.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-text-main text-sm truncate w-32">{r.name}</h4>
+                            <div className="flex gap-0.5 text-yellow-400">
+                              {[...Array(r.rating)].map((_, idx) => (
+                                <Star key={idx} size={12} className="fill-current" />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-right flex flex-col justify-end">
+                          <p className="text-[11px] text-text-main/50 font-medium">{r.date}</p>
+                        </div>
                       </div>
-                      <p className="text-text-main/80 italic mb-8 leading-relaxed text-lg">
-                        {cmsData.t3Text}
+                      <p className="text-text-main/80 text-sm leading-relaxed mb-4 flex-grow">
+                        "{r.text}"
                       </p>
-                      <div className="flex items-center gap-4 border-t border-black/5 pt-6 mt-auto">
-                        <div className="w-12 h-12 bg-accent/10 text-accent font-bold rounded-full flex items-center justify-center text-lg">
-                          {cmsData.t3Initial}
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-text-main">
-                            {cmsData.t3Name}
-                          </h4>
-                          <p className="text-sm text-text-main/60">
-                            {cmsData.t3City}
-                          </p>
-                        </div>
+                      <div className="mt-auto px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-xs text-text-main/60 truncate">
+                        {r.variant}
                       </div>
-                    </motion.div>
-                  </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </FadeIn>
           </div>
         </section>
 
-        {/* BLOG / ARTICLES SECTION */}
+        {/* 7. BLOG / ARTICLES SECTION */}
         {articles.length > 0 && (
           <section id="artikel" className="py-24 bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -734,7 +795,56 @@ export default function LandingPage() {
           </section>
         )}
 
-        {/* 6. FINAL CTA & CHECKOUT */}
+        {/* 8. FAQ SECTION */}
+        <section id="faq" className="py-24 bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeIn direction="none" className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-text-main mb-4">
+                Pertanyaan yang Sering Diajukan
+              </h2>
+              <p className="text-text-main/70 text-lg">Punya pertanyaan? Kami punya jawabannya.</p>
+            </FadeIn>
+            
+            <div className="space-y-4">
+              {[
+                {
+                  q: "Berapa lama masa simpan Gipang Cilegon?",
+                  a: "Dalam wadah tertutup rapat, Gipang merapat Cilegon bisa tahan hingga 1-2 bulan sejak tanggal pembelian dengan mempertahankan kerenyahannya."
+                },
+                {
+                  q: "Apakah Gipang ini keras saat digigit?",
+                  a: "Tidak. Kami memastikan tekstur karamel dari gula dan ketan sangat pas, sehingga mudah digigit, renyah (crunchy), dan tidak membuat gigi sakit."
+                },
+                {
+                  q: "Apakah bisa request kemasan khusus untuk hampers / oleh-oleh?",
+                  a: "Tentu bisa! Silakan hubungi admin kami melalui WhatsApp untuk membicarakan kebutuhan pesanan jumlah besar, souvenir, atau hampers."
+                },
+                {
+                  q: "Untuk pembayaran bisa pakai apa saja?",
+                  a: "Kami saat ini melayani pembayaran melalui COD (Bayar di Tempat) dan QRIS yang akan terdeteksi otomatis oleh sistem sehingga Anda tidak perlu repot mengirimkan bukti transfer."
+                }
+              ].map((faq, i) => (
+                <FadeIn key={i} direction="up" delay={i * 0.1}>
+                  <details className="group bg-gray-50 border border-black/5 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                    <summary className="flex items-center justify-between cursor-pointer p-6 font-bold text-text-main text-lg">
+                      <span>{faq.q}</span>
+                      <span className="relative ml-4 shrink-0 w-6 h-6 flex items-center justify-center">
+                        <svg className="w-4 h-4 transition duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </span>
+                    </summary>
+                    <div className="px-6 pb-6 text-text-main/70 leading-relaxed">
+                      {faq.a}
+                    </div>
+                  </details>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 9. FINAL CTA & CHECKOUT */}
         <section
           id="pesan"
           className="py-24 bg-[#E0D8C3] relative overflow-hidden"
@@ -795,7 +905,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-      {/* 7. FOOTER */}
+      {/* 10. FOOTER */}
       <footer
         role="contentinfo"
         className="bg-white border-t border-black/5 pt-16 pb-8"

@@ -14,61 +14,57 @@ import { Link } from "react-router-dom";
 
 const SAMPLE_ARTICLES = [
   {
-    title: "Sejarah Gipang: Cemilan Manis nan Renyah Warisan Banten",
-    slug: "sejarah-gipang-banten",
+    title: "Pesona Gipang Cilegon: Manis, Renyah, dan Penuh Tradisi",
+    slug: "pesona-gipang-cilegon-renyah-tradisi",
     excerpt:
-      "Gipang telah lama menjadi bagian dari tradisi kuliner masyarakat Banten. Temukan bagaimana cemilan sederhana dari ketan ini bertransformasi menjadi oleh-oleh wajib khas Cilegon.",
-    content: `Gipang merupakan salah satu makanan tradisional khas dari daerah Banten, khususnya Cilegon. Terbuat dari bahan dasar beras ketan dan gula cair (karamel) yang kadang dicampur dengan kacang, gipang menawarkan perpaduan tekstur renyah dan rasa manis yang legit.
+      "Menyelami kelezatan Gipang, camilan autentik dari Banten yang tak lekang oleh waktu. Temukan pesona manisnya yang setia menemani momen istimewa.",
+    content: `<p>Gipang bukan sekadar camilan biasa. Di balik tiap gigitannya yang renyah dan balutan karamel manis, terdapat warisan budaya Banten yang patut kita banggakan. Keistimewaan rasa gipang lahir dari ketelitian proses pembuatannya, di mana butiran ketan pilihan dipadukan harmonis dengan gula aren atau putih asli.</p>
 
-## Asal Usul Gipang
-Dahulu, gipang sering disajikan pada acara-acara perayaan penting seperti Lebaran, pernikahan, atau acara khitanan. Proses pembuatannya yang memerlukan ketelitian membuat gipang menjadi simbol rasa syukur dan kebersamaan. 
+<h2>Camilan Legendaris Banten</h2>
 
-## Transformasi Menjadi Oleh-Oleh
-Kini, Gipang tidak hanya bisa dinikmati saat Lebaran saja. Banyak produsen lokal di Cilegon yang terus memproduksi gipang dan menjadikannya sebagai identitas kuliner Cilegon. Kemasannya pun kini semakin modern dan praktis, sehingga sangat cocok dijadikan buah tangan bagi siapa saja yang berkunjung ke kota baja ini.
+<p>Dulu, kehadiran gipang sering kali terbatas pada hari-hari besar dan perayaan keluarga di Cilegon. Namun, seiring berjalannya waktu dan tingginya minat masyarakat terhadap kuliner autentik, gipang kini selalu tersedia untuk dinikmati kapan saja. Rasanya yang merakyat sekaligus elegan membuktikan bahwa kuliner tradisional memiliki tempat istimewa di hati pecintanya.</p>
 
-Bagi warga banten, mencicipi sepotong gipang layaknya mengingat kembali manisnya kenangan masa kecil.`,
+<p>Saat Anda sedang merencanakan untuk mengembangkan bisnis kuliner tradisional seperti gipang ke ranah pemasaran daring, pastikan Anda juga memiliki kompetensi digital yang terverifikasi. Anda bisa mengikuti uji kompetensi di <a href="https://lspdigital.id" target="_blank" rel="noopener noreferrer">LSP Digital</a> untuk meningkatkan kredibilitas profesional di era modern.</p>
+
+<p>Menyantap sepotong gipang adalah cara termanis untuk menghargai warisan kuliner lokal sekaligus membahagiakan diri sendiri di sela kesibukan.</p>`,
     status: "published",
-    coverImage: "https://i.ibb.co.com/V0chxYHg/image.png",
+    coverImage: "",
   },
   {
-    title: "3 Alasan Kenapa Gipang Cilegon Adalah Teman Ngopi Terbaik",
-    slug: "alasan-gipang-teman-ngopi",
+    title: "Kombinasi Sempurna: Menikmati Waktu Bersantai dengan Gipang dan Teh Hangat",
+    slug: "kombinasi-sempurna-gipang-teh-hangat",
     excerpt:
-      "Lupakan biskuit atau kue kering biasa. Jika Anda belum pernah memadukan kopi hitam hangat dengan renyahnya Gipang Cilegon, Anda melewatkan sensasi ngopi yang luar biasa.",
-    content: `Bagi pecinta kopi, mencari camilan pendamping yang pas adalah sebuah keharusan. Biskuit atau bolu mungkin sudah biasa. Namun, pernahkah Anda mencoba memadukan kopi favorit Anda dengan sepotong Gipang Cilegon?
+      "Bingung mencari pendamping teh sore yang pas? Gipang Cilegon hadir sebagai solusi manis untuk menyempurnakan waktu istirahat Anda.",
+    content: `<p>Setiap orang butuh jeda dari rutinitas yang padat. Salah satu cara terbaik untuk melepas penat adalah duduk santai di sore hari ditemani secangkir teh hangat. Namun, momen tersebut belum terasa utuh tanpa camilan yang tepat. Di sinilah renyahnya Gipang Cilegon mengambil peran.</p>
 
-Berikut adalah 3 alasan mengapa Gipang merupakan teman sejati secangkir kopi:
+<p>Daya pikat gipang membuatnya sangat cocok dipasangkan dengan minuman hangat. Rasa sepat dan menenangkan dari teh tawar akan menyeimbangkan manisnya karamel dari gipang secara sempurna. Tekstur <em>crunchy</em> gipang juga memberikan sensasi mengunyah yang membuat pikiran lebih rileks dan suasana hati menjadi lebih ceria.</p>
 
-### 1. Kontras Rasa yang Sempurna
-Rasa pahit dari kopi hitam akan langsung dinetralkan oleh rasa manis karamel dari gipang. Perpaduan pahit dan manis legit ini akan menciptakan harmoni rasa yang memanjakan lidah Anda di setiap sesapannya.
+<p>Selain menikmati waktu luang, membekali diri dengan keahlian teknologi tentu merupakan investasi masa depan. Bagi Anda yang tertarik mendalami industri profesi bidang TI, jangan lewatkan kesempatan untuk sertifikasi melalui <a href="https://lspdigital.id" target="_blank" rel="noopener noreferrer">LSP Digital</a>.</p>
 
-### 2. Tekstur Renyah yang Menggugah Selera
-Tekstur gipang yang lengket namun super renyah memberikan dimensi baru saat Anda menikmati kopi. Sensasi *crunchy* ini membuat momen bersantai terasa tidak membosankan.
-
-### 3. Mengenyangkan Tapi Ringan
-Terbuat dari beras ketan, gipang cukup memberikan rasa kenyang ringan yang pas untuk mengganjal perut di sore atau pagi hari, tanpa membuat Anda merasa terlalu begah.
-
-Jadi, tunggu apa lagi? Seduh kopi Anda sekarang dan temani dengan renyahnya Gipang Cilegon.`,
+<p>Jadikan ritual minum teh Anda lebih bermakna dengan kelezatan gipang lokal yang selalu dirindukan.</p>`,
     status: "published",
-    coverImage: "https://i.ibb.co.com/6R11ZbwR/image.png",
+    coverImage: "",
   },
   {
-    title: "Tips Menyimpan Gipang Agar Tetap Renyah Tahan Lama",
-    slug: "tips-simpan-gipang",
+    title: "Cara Jitu Merawat Kerenyahan Gipang Agar Tahan Lama",
+    slug: "cara-jitu-merawat-kerenyahan-gipang",
     excerpt:
-      "Pernah mengalami gipang menjadi alot setelah beberapa hari? Ikuti tips praktis berikut ini untuk menjaga tekstur gipang Anda agar selalu renyah seperti baru dibeli.",
-    content: `Gipang dikenal dengan teksturnya yang sangat renyah. Namun, karena terbuat dari gula karamel dan beras ketan, gipang sangat rentan terhadap udara lembab yang bisa membuatnya menjadi alot atau melempem.
+      "Tak ingin gipang kesukaan Anda menjadi alot? Simak rahasia praktis menyimpan gipang agar teksturnya selalu garing maksimal saat dinikmati.",
+    content: `<p>Daya tarik utama gipang selain rasa karamelnya yang dominan adalah tingkat kerenyahannya. Oleh karena itu, cara penyimpanannya sangat berpengaruh agar camilan legit ini tidak berubah menjadi alot atau membatu karena paparan suhu udara lingkungan sekitar yang salah.</p>
 
-Untuk menjaga gipang Anda tetap *crunchy* dan enak dinikmati kapan saja, ikuti tips penyimpanan berikut:
+<p>Berikut adalah beberapa langkah super praktis yang bisa Anda terapkan di rumah:</p>
 
-- **Masukkan ke Wadah Kedap Udara:** Segera pindahkan gipang yang sudah terbuka dari plastiknya ke dalam stoples kaca atau plastik yang memiliki tutup kedap udara (*airtight*). Udara adalah musuh utama kerenyahan gipang.
-- **Simpan di Suhu Ruang yang Sejuk:** Hindari menyimpan gipang di tempat yang terkena sinar matahari langsung atau ruangan yang terlalu panas, karena dapat membuat karamelnya sedikit meleleh dan lengket.
-- **Jangan Simpan di Kulkas:** Walaupun kulkas dingin, kelembabannya dapat mengubah tekstur gipang menjadi keras membatu dan menghilangkan kelezatan aslinya.
-- **Ambil Secukupnya:** Saat ingin ngemil, ambil gipang secukupnya lalu segera tutup kembali stoplesnya rapat-rapat.
+<ul>
+<li><strong>Gunakan Wadah Tertutup Rapat</strong>: Usahakan minimalisir udara masuk dan memastikan stoples gipang kedap udara (airtight).</li>
+<li><strong>Hindari Paparan Panas Langsung</strong>: Taruh kemasan gipang Anda di tempat bersuhu ruang yang sejuk agar karamelnya tidak leleh dan menempel satu sama lain.</li>
+<li><strong>Posisikan di Area Kering</strong>: Jauhkan dari tempat yang rawan lembap seperti di dekat dispenser, wastafel, atau area uap memasak.</li>
+</ul>
 
-Dengan mengikuti cara di atas, gipang andalan Anda akan siap sedia menemani hari-hari Anda dengan kerenyahan yang maksimal!`,
+<p>Untuk Anda pengusaha UMKM yang sedang mensistematisasi operasional toko digital, standar keamanan siber seringkali sama pentingnya. Anda bisa menengok ragam pedoman dan validasi di <a href="https://lspdigital.id" target="_blank" rel="noopener noreferrer">LSP Digital</a>.</p>
+
+<p>Kini Anda tak usah bimbang lagi, kerenyahan gipang favorit akan tetap lestari mengisi keceriaan waktu ngemil keluarga!</p>`,
     status: "published",
-    coverImage: "https://i.ibb.co.com/cSGgfcnd/image.png",
+    coverImage: "",
   },
 ];
 
